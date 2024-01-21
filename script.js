@@ -5,9 +5,14 @@ $(function () {
   var today = dayjs();
   var textFields = [$('#textarea1'),$('#textarea2'),$('#textarea3')]
   var saviors = [$('#saveBtn1'),$('#saveBtn2'),$('#saveBtn3')]
-  function save(event){
-    
-  }
+
+  $('.saveBtn').on('click', function(){
+    var i = $('.saveBtn').index(this);
+    console.log(textFields[i].val());
+    localStorage.setItem("textFields" + i, JSON.stringify(textFields[i].val()));
+    }
+  )
+  
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
