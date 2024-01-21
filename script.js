@@ -3,16 +3,29 @@
 // in the html.
 $(function () {
   var today = dayjs();
+  var currentHour = today.format('H');
   var textFields = [$('#textarea1'),$('#textarea2'),$('#textarea3')]
-  var saviors = [$('#saveBtn1'),$('#saveBtn2'),$('#saveBtn3')]
-
+  var colorBoxes = [$('#9'),$('#10'),$('#11'),$('#12'),$('#13'),$('#14'),$('#15'),$('#16'),$('#17')]
   $('.saveBtn').on('click', function(){
     var i = $('.saveBtn').index(this);
-    console.log(textFields[i].val());
-    localStorage.setItem("textFields" + i, JSON.stringify(textFields[i].val()));
+    localStorage.setItem("textFields" + i, textFields[i].val());
     }
   )
-  
+  $(function () {
+    for(i=0; i<textFields.length; i++){
+    var savedText = localStorage.getItem("textFields"+i);
+    textFields[i].text(savedText);
+    }})
+
+function colorToHour(){
+  for(j=0;j<colorBoxes.length;j++){
+    if (+currentHour === j+9) {
+        $(colorBoxes[j]).removeClass("past", "future").addClass("present");} 
+    if(+currentHour < j+9){
+        $(colorBoxes[j]).removeClass("past", "present").addClass("future");} 
+    if(+currentHour > j+9){
+        $(colorBoxes[j]).removeClass("future", "present").addClass("past");}
+    }}
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -31,6 +44,19 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-  
-  $('#currentDay').text(today.format('MMMM D, YYYY hh:mm:ss'))
+  $(function countdown() {
+    var timer = 0;
+      setInterval(function() {
+        if(timer === 0 || timer%2 === 0){
+          today = dayjs();
+          $('#currentDay').text(today.format('MMMM D, YYYY hh:mm A'));
+          }
+        timer++
+        colorToHour();
+    }, 1000);
+});
+console.log(currentHour);
+console.log(typeof +currentHour);
+console.log(colorBoxes[3]);
+
 });
