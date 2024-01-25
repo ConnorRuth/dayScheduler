@@ -23,9 +23,7 @@ $(function () {
           currentHour = +currentHour;
     for(j=0;j<colorBoxes.length;j++){
       if (currentHour === j+9) {
-        $(colorBoxes[j]).removeClass(["past", "future"]).addClass("present");
-        console.log(colorBoxes[j]);
-        console.log(currentHour);} 
+        $(colorBoxes[j]).removeClass(["past", "future"]).addClass("present");} 
       if(currentHour < j+9){
         $(colorBoxes[j]).removeClass(["past", "present"]).addClass("future");} 
       if(currentHour > j+9){
