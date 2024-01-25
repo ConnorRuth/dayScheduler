@@ -9,7 +9,7 @@ $(function () {
   $('.saveBtn').on('click', function(){
     var i = $('.saveBtn').index(this);
     localStorage.setItem("textFields" + i, textFields[i].val());
-    })
+  })
     //get the saved text fields upon loading
     $(function () {
     for(i=0; i<textFields.length; i++){
@@ -17,36 +17,35 @@ $(function () {
       textFields[i].text(savedText);}
     });
     //take the current hour and compare it to the hour represented by each item in colorBoxes array and adjust their classes accordingly
-function colorToHour(){
-  for(j=0;j<colorBoxes.length;j++){
-    if (currentHour === j+9) {
+  function colorToHour(){
+    for(j=0;j<colorBoxes.length;j++){
+      if (currentHour === j+9) {
         $(colorBoxes[j]).removeClass("past", "future").addClass("present");} 
-    if(currentHour < j+9){
+      if(currentHour < j+9){
         $(colorBoxes[j]).removeClass("past", "present").addClass("future");} 
-    if(currentHour > j+9){
+      if(currentHour > j+9){
         $(colorBoxes[j]).removeClass("future", "present").addClass("past");}
     }}
-    //run each of these so that they load immidaitely upon openning window updater function adds a sec or 2 delay to start
-$(function init(){
-  colorToHour();
-  $('#currentDay').text(today.format('MMMM D, YYYY hh:mm A'));
-});
- // run at timer to update our colors and time at the top checking every 2 seonds as to prevent less lag but keep it within close margin of proper time
+    //run each of these so that they load immidaitely upon openning window. updater function adds a sec or 2 delay to start
+  $(function init(){
+    colorToHour();
+    $('#currentDay').text(today.format('MMMM D, YYYY hh:mm A'));
+  });
+ // run at timer to update our colors and time at the top checking every 2 seonds as to have less lag but keep it within close margin of proper time
   $(function updater() {
     var timer = 0;
       setInterval(function() {
         if(timer === 0 || timer%2 === 0){
           today = dayjs();
-          $('#currentDay').text(today.format('MMMM D, YYYY hh:mm A'));
+          init();
           }
         timer++
-        colorToHour();
     }, 1000);
-});
+  });
 //clear storage and current events in the day planner
-$('#purgeBtn').on('click', function(){
-  for(k=0; k<textFields.length; k++){
-    localStorage.clear("textFields" + k);
-    $(textFields[k]).val("");}
+  $('#purgeBtn').on('click', function(){
+    for(k=0; k<textFields.length; k++){
+      localStorage.clear("textFields" + k);
+      $(textFields[k]).val("");}
   });
 });
