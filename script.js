@@ -18,13 +18,18 @@ $(function () {
     });
     //take the current hour and compare it to the hour represented by each item in colorBoxes array and adjust their classes accordingly
   function colorToHour(){
+          today = dayjs();
+          currentHour = today.format('H');
+          currentHour = +currentHour;
     for(j=0;j<colorBoxes.length;j++){
       if (currentHour === j+9) {
-        $(colorBoxes[j]).removeClass("past", "future").addClass("present");} 
+        $(colorBoxes[j]).removeClass(["past", "future"]).addClass("present");
+        console.log(colorBoxes[j]);
+        console.log(currentHour);} 
       if(currentHour < j+9){
-        $(colorBoxes[j]).removeClass("past", "present").addClass("future");} 
+        $(colorBoxes[j]).removeClass(["past", "present"]).addClass("future");} 
       if(currentHour > j+9){
-        $(colorBoxes[j]).removeClass("future", "present").addClass("past");}
+        $(colorBoxes[j]).removeClass(["future", "present"]).addClass("past");}
     }}
     //run each of these so that they load immidaitely upon openning window. updater function adds a sec or 2 delay to start
   $(function init(){
@@ -37,7 +42,8 @@ $(function () {
       setInterval(function() {
         if(timer === 0 || timer%2 === 0){
           today = dayjs();
-          init();
+          colorToHour();
+          $('#currentDay').text(today.format('MMMM D, YYYY hh:mm A'));
           }
         timer++
     }, 1000);
